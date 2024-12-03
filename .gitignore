@@ -1,0 +1,11 @@
+.idea
+__pycache__
+logs
+models/**
+data/**
+## user-defined
+
+test.py
+files/**
+test_files/**
+

@@ -1,0 +1,31 @@
+version: "3"
+services:
+  python_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    container_name: ru-vc-test
+    image: test/ru-vc-test
+    env_file:
+      - .env
+    environment:
+      - WORK_DIR=${WORK_DIR}
+      - DATASET_DIR=${DATASET_DIR}
+      - MODEl_DIR=${MODEl_DIR}
+    stdin_open: true
+    tty: true
+    volumes:
+      - ${WORK_DIR}:/opt/project
+      - ${DATASET_DIR}:/opt/project/data
+      - ${MODEl_DIR}:/opt/project/models
+    ports:
+      - 2222:22
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 0
+              capabilities: [gpu]
